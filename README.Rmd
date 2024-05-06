@@ -1,0 +1,68 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# Numpute
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of CatCorr is to evaluate factor variables for correlation, a task which is somewhat challenging given that traditional correlation calculations are intended primarily for numeric variables.
+
+## Installation
+
+You can install the development version of CatCorr from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("easoneli176/CatCorr")
+```
+
+## Example
+
+First, the crmv function takes 2 factor variables in the form of vectors and calculates their Cramer's V, which is the metric we use to approximate correlation for factor variables throughout this package.
+
+```{r example}
+library(CatCorr)
+
+mock_data<-data.frame(fac1 = c(rep("A",3),rep("B",3),rep("C",3),rep("D",3)) , fac2 = c(rep("E",3),rep("F",2),rep("G",4),rep("H",3)))
+
+crmv(mock_data[,1],mock_data[,2])
+```
+
+Taking this a step further, the onevarcv function takes one variable in a dataframe and calculates its Cramer's V with all other variables in that dataframe.
+
+```{r example2}
+mock_data$fac3<-c(rep("I",4),rep("J",4),rep("K",4))
+
+onevarcv(mock_data[,1],mock_data)
+```
+
+Continuing onward, the crmvtbl function calculates the Cramer's V for all variables in a dataframe.
+
+```{r example3}
+crmvtbl(mock_data)
+```
+
+Next, crmvtbl_condense is a helper function that takes a dataframe and makes a new table compatible to be fed to catcorrplot
+
+```{r example4}
+crmvtbl_condense(mock_data)
+```
+
+Finally, the catcorrplot function brings all these together and makes a nice visualization for all the correlations between the factor values in the dataframe.
+
+```{r example5}
+catcorrplot(mock_data)
+```
